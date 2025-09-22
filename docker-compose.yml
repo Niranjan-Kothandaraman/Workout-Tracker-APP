@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./backend
+    container_name: workout-backend
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./backend/workouts.db:/app/workouts.db   # persist SQLite database
+    restart: always
+
+  frontend:
+    build: ./frontend
+    container_name: workout-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: always
